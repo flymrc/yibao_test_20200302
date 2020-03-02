@@ -1,8 +1,10 @@
+import uuid
 from django.db import models
 from django.core.validators import MaxValueValidator
 
 
 class EmployeeUser(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     empno = models.BigIntegerField(unique=True, db_index=True, validators=[MaxValueValidator(50000)], verbose_name='编号')
     name = models.CharField(max_length=64, verbose_name='用户名')
     group = models.ManyToManyField('Organization', through='GroupMember', related_name='emp')
